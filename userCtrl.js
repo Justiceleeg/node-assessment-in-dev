@@ -4,7 +4,7 @@ module.exports= {
 
   getUsers: function (req, res, next){
 
-    if(req.query){
+    if(req.query != {}){
       const key = Object.keys(req.query)[0]
       const value = req.query[key]
       var result = [];
@@ -40,12 +40,17 @@ module.exports= {
           }
           break;
       }
-      return res.status(200).json(result)
-    }
-    else {
 
-      return res.status(200).json(users)
+      if (!value){
+        return res.status(200).send(userData);
+      }
+      if (key == "email"){
+        return res.status(200).json(result[0]);
+      }
+      return res.status(200).json(result);
+
     }
+
   },
 
   getUserById: function(req, res, next){
